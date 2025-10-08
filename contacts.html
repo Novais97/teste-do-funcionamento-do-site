@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NCR — Contact & Estimates</title>
+    <style>
+      :root { --primary:#1f6feb; --secondary:#0d1117; --bg:#f6f8fa; --card:#ffffff; --text:#0f172a; --muted:#64748b; --wa:#25D366; --border:#e5e7eb; }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial; line-height:1.6; }
+
+      /* Header */
+      header.site { position: sticky; top: 0; z-index: 40; color:#fff; background: linear-gradient(135deg, var(--secondary), var(--primary)); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+      .topbar { max-width: 1200px; margin: 0 auto; padding:.9rem 1rem; display:flex; align-items:center; justify-content:space-between; gap:.75rem; }
+      .brand { font-weight:800; letter-spacing:.06em; }
+      .home-btn { display:inline-flex; align-items:center; gap:.45rem; padding:.55rem .9rem; border-radius:999px; background:#fff; color:var(--secondary); text-decoration:none; font-weight:700; border:2px solid rgba(255,255,255,.75); box-shadow:0 8px 18px rgba(2,8,23,.25); }
+      .home-btn:hover { transform: translateY(-1px); box-shadow:0 12px 26px rgba(2,8,23,.32); }
+
+      /* Hero */
+      .hero { position:relative; isolation:isolate; }
+      .hero::before { content:""; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1590490360180-7ce35efb2311?auto=format&fit=crop&w=1600&q=70') center/cover no-repeat; transform:scale(1.02); z-index:-2; }
+      .hero::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg, rgba(13,17,23,.75), rgba(13,17,23,.45)); z-index:-1; }
+      .hero__inner { max-width:1100px; margin:0 auto; padding:56px 16px 64px; color:#fff; }
+      .hero h1 { margin:0 0 10px; font-size:clamp(1.8rem,4.2vw,2.6rem); font-weight:800; }
+      .hero p { margin:0 0 18px; color:rgba(255,255,255,.9); max-width:56ch; }
+      .cta-row { display:flex; gap:10px; flex-wrap:wrap; }
+      .btn { display:inline-flex; align-items:center; gap:.5rem; height:44px; padding:0 16px; border-radius:12px; border:1px solid rgba(255,255,255,.6); text-decoration:none; font-weight:700; }
+      .btn.primary { background:var(--primary); color:#fff; border-color:var(--primary); }
+      .btn.ghost { background:#fff; color:var(--secondary); }
+      .btn svg { width:18px; height:18px; }
+
+      /* Sections */
+      section { padding:40px 16px; }
+      .wrap { max-width:1100px; margin:0 auto; }
+      .section-title { margin:0 0 8px; font-size:clamp(1.25rem,2.5vw,1.8rem); color:var(--secondary); }
+      .section-sub { margin:0 0 18px; color:var(--muted); }
+
+      /* Cards */
+      .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
+      .card { background:var(--card); border:1px solid var(--border); border-radius:16px; box-shadow:0 12px 28px rgba(2,8,23,.08); padding:16px; }
+      .item { display:grid; gap:4px; }
+      .item strong { color:var(--secondary); font-size:.95rem; }
+      .item a { color:var(--primary); text-decoration:none; font-weight:700; display:inline-flex; align-items:center; gap:.45rem; }
+      .item a:hover { text-decoration:underline; }
+
+      /* Notice */
+      .notice { border:1px solid var(--border); border-left:6px solid var(--primary); border-radius:14px; background:#fff; box-shadow:0 8px 22px rgba(2,8,23,.06); padding:18px; }
+      .notice h3 { margin:0 0 8px; font-size:1.1rem; color:var(--secondary); }
+      .notice ul { margin:10px 0 0 18px; padding:0; }
+      .notice li { margin:6px 0; }
+
+      /* Timeline */
+      .timeline { position:relative; margin:10px 0 0; }
+      .timeline::before { content:""; position:absolute; left:16px; top:0; bottom:0; width:2px; background:#e2e8f0; }
+      .step { position:relative; display:grid; grid-template-columns:48px 1fr; gap:12px; padding:10px 0; }
+      .dot { width:32px; height:32px; border-radius:999px; display:grid; place-items:center; background:#fff; border:2px solid var(--primary); color:var(--primary); font-weight:800; }
+      .step h4 { margin:2px 0 4px; font-size:1rem; color:var(--secondary); }
+      .step p { margin:0; color:var(--muted); }
+
+      /* Tips */
+      .tips { background:linear-gradient(180deg, #ffffff, #f9fbff); border:1px solid rgba(31,111,235,.18); border-radius:14px; padding:16px; box-shadow:0 8px 22px rgba(2,8,23,.06); }
+
+      /* CTA */
+      .cta { color:#fff; background:linear-gradient(135deg, rgba(31,111,235,.95), rgba(13,17,23,.95)); text-align:center; }
+      .cta .wrap { max-width:900px; }
+      .cta h2 { margin:0 0 8px; font-size:clamp(1.3rem,2.8vw,2rem); }
+      .cta p { margin:0 0 18px; color:rgba(255,255,255,.9); }
+
+      /* Back-to-top */
+      .back-to-top { position:fixed; bottom:1.25rem; right:1.25rem; width:52px; height:52px; border-radius:999px; background:var(--primary); color:#fff; border:none; display:grid; place-items:center; font-size:20px; box-shadow:0 10px 24px rgba(2,8,23,.25); z-index:60; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .25s ease, transform .25s ease, box-shadow .25s ease; }
+      .back-to-top.show { opacity:1; pointer-events:auto; transform:translateY(0); }
+      .back-to-top:hover { box-shadow:0 14px 30px rgba(2,8,23,.32); }
+      
+      /* Scroll-reveal */
+      .sr { opacity:0; transform: translateY(20px); transition: transform .6s ease, opacity .6s ease; will-change: transform, opacity; }
+      .sr.reveal { opacity:1; transform:none; }
+      @media (prefers-reduced-motion: reduce) { .sr { opacity:1; transform:none !important; transition:none; } }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="topbar">
+        <div class="brand">NCR — Contact & Estimates</div>
+        <a href="index.html" class="home-btn" aria-label="Home page">Home</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero__inner">
+        <h1>Talk to NCR</h1>
+        <p>We deliver residential and commercial projects with planning, safety, and quality. Send photos, describe your project, or schedule a site visit.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="form.html" aria-label="Request a quote">Request a Quote</a>
+          <a class="btn ghost" href="https://wa.me/18733543092?text=Hello%20NCR,%20I%E2%80%99d%20like%20to%20schedule%20a%20site%20visit." target="_blank" rel="noopener" aria-label="Schedule a visit">Schedule a Visit</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="contact">
+      <h2 id="contact" class="section-title">Contact Information</h2>
+      <p class="section-sub">Official channels to reach Novais Construction & Renovation — NCR.</p>
+      <div class="cards">
+        <div class="card item sr" data-sr-delay="0"><strong>Company name</strong><div>Novais Construction & Renovation — NCR</div></div>
+        <div class="card item sr" data-sr-delay="60"><strong>Phone / WhatsApp</strong><a href="tel:+18733543092">+1 (873) 354‑3092</a><a href="https://wa.me/18733543092" target="_blank" rel="noopener">Chat on WhatsApp</a></div>
+        <div class="card item sr" data-sr-delay="120"><strong>Email</strong><a href="mailto:servicesncrnovais@gmail.com">servicesncrnovais@gmail.com</a></div>
+        <div class="card item sr" data-sr-delay="180"><strong>Address</strong><div>Toronto and surrounding areas (service radius up to 300 km)</div></div>
+        <div class="card item sr" data-sr-delay="240"><strong>Social media</strong><a href="https://www.facebook.com/NCRnovais/" target="_blank" rel="noopener">Facebook: /NCRnovais</a><a href="https://www.instagram.com/servicesncrnovais/" target="_blank" rel="noopener">Instagram: @servicesncrnovais</a></div>
+        <div class="card item sr" data-sr-delay="300"><strong>Request a Quote</strong><a class="btn primary" href="form.html">Open form</a></div>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="terms">
+      <div class="notice sr" data-sr-delay="0">
+        <h3 id="terms">Estimate Terms for Large-Scale Projects</h3>
+        <ul>
+          <li>For larger works, we provide a segmented proposal with clear phases (planning, mobilization, execution, handover).</li>
+          <li>After the site visit and scope confirmation, a down payment of up to 40% is required to reserve dates and mobilize the crew.</li>
+          <li>Once the project starts, subsequent payments follow the agreed schedule to enable material purchases and continuous progress.</li>
+          <li>The payment schedule will be presented in the proposal/contract with milestones, dates, and conditions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="wrap" aria-labelledby="process">
+      <h2 id="process" class="section-title">Process — How We Work</h2>
+      <p class="section-sub">End‑to‑end transparency for accurate estimates and efficient delivery.</p>
+      <div class="timeline">
+        <div class="step sr" data-sr-delay="0"><div class="dot">1</div><div><h4>Share your project</h4><p>Send photos, description, dimensions or floor plan — or schedule a site visit.</p></div></div>
+        <div class="step sr" data-sr-delay="60"><div class="dot">2</div><div><h4>On‑site assessment</h4><p>We take measurements and validate constraints to ensure an accurate estimate.</p></div></div>
+        <div class="step sr" data-sr-delay="120"><div class="dot">3</div><div><h4>Detailed proposal</h4><p>We present phases, timelines, pricing, conditions, and a payment schedule.</p></div></div>
+        <div class="step sr" data-sr-delay="180"><div class="dot">4</div><div><h4>Approval + deposit</h4><p>Upon approval, a deposit (up to 40%) reserves the schedule and mobilizes the team.</p></div></div>
+        <div class="step sr" data-sr-delay="240"><div class="dot">5</div><div><h4>Mobilization</h4><p>Materials purchasing, logistics, and crew allocation.</p></div></div>
+        <div class="step sr" data-sr-delay="300"><div class="dot">6</div><div><h4>Execution</h4><p>Work proceeds per schedule and best practices for safety and quality.</p></div></div>
+        <div class="step sr" data-sr-delay="360"><div class="dot">7</div><div><h4>Oversight</h4><p>Supervision, inspections, and any adjustments aligned with the client.</p></div></div>
+        <div class="step sr" data-sr-delay="420"><div class="dot">8</div><div><h4>Handover</h4><p>Final delivery with punch‑list fixes as applicable.</p></div></div>
+      </div>
+      <div class="tips sr" data-sr-delay="100" style="margin-top:14px"><strong>Tip</strong><p style="margin:6px 0 0">The more info (photos, dimensions, references), the faster and more accurate the estimate.</p></div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <h2>Ready to get started?</h2>
+        <p>Tell us about your project, send photos, or schedule a site visit.</p>
+        <div class="cta-row" style="justify-content:center">
+          <a class="btn primary" href="form.html" aria-label="Request your quote">Request a Quote</a>
+          <a class="btn ghost" href="https://wa.me/18733543092?text=Hello%20NCR,%20can%20you%20visit%20the%20site%20for%20an%20estimate?" target="_blank" rel="noopener" aria-label="Schedule a visit">Schedule a Visit</a>
+        </div>
+      </div>
+    </section>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+    <script>
+      (function(){
+        // Back to top
+        const btn = document.getElementById('backToTop');
+        function toggle(){ const show = window.scrollY > 400; btn.classList.toggle('show', show); }
+        window.addEventListener('scroll', toggle, { passive: true });
+        document.addEventListener('DOMContentLoaded', toggle);
+        btn.addEventListener('click', (e)=>{ e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // Scroll reveal
+        const els = document.querySelectorAll('.sr');
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              const el = entry.target;
+              const d = Number(el.getAttribute('data-sr-delay')||0);
+              if (d) el.style.transitionDelay = d+'ms';
+              el.classList.add('reveal');
+              io.unobserve(el);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+        els.forEach(el=>io.observe(el));
+      })();
+    </script>
+  </body>
+  </html>
